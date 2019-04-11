@@ -1,23 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BV1-FR-VrT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NTt-h3-f58">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Menu View Controller-->
+        <scene sceneID="wj3-jJ-W25">
+            <objects>
+                <viewController id="4dl-sD-gXA" customClass="MenuViewController" customModule="Snake_It_AR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b2d-8M-tyN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="xcN-8X-jUu">
+                                <rect key="frame" x="16" y="403" width="382" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qqv-Kn-IgR">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="44"/>
+                                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="6Vx-Rk-Xxs"/>
+                                        </constraints>
+                                        <state key="normal" title="Play Snake AR">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="BV1-FR-VrT" kind="show" id="adE-Bu-v92"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qzc-gA-RBN">
+                                        <rect key="frame" x="0.0" y="60" width="382" height="30"/>
+                                        <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="jfZ-jC-ZAP"/>
+                                        </constraints>
+                                        <state key="normal" title="Help!">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="pgt-n2-eHz" kind="show" id="tMC-CS-iPy"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYO-dk-muZ">
+                                <rect key="frame" x="0.0" y="44" width="414" height="351"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snakelogo" translatesAutoresizingMaskIntoConstraints="NO" id="Nsu-jX-W9N">
+                                        <rect key="frame" x="44" y="44" width="326" height="207"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Nsu-jX-W9N" firstAttribute="leading" secondItem="YYO-dk-muZ" secondAttribute="leading" constant="44" id="KT2-ec-3QP"/>
+                                    <constraint firstAttribute="trailing" secondItem="Nsu-jX-W9N" secondAttribute="trailing" constant="44" id="PzU-VW-qMd"/>
+                                    <constraint firstAttribute="bottom" secondItem="Nsu-jX-W9N" secondAttribute="bottom" constant="100" id="WZ1-9x-1DJ"/>
+                                    <constraint firstItem="Nsu-jX-W9N" firstAttribute="top" secondItem="YYO-dk-muZ" secondAttribute="top" constant="44" id="vIW-XX-5Nv"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="YYO-dk-muZ" firstAttribute="top" secondItem="o0F-Tg-qmB" secondAttribute="top" id="BQf-4M-dWK"/>
+                            <constraint firstItem="YYO-dk-muZ" firstAttribute="trailing" secondItem="o0F-Tg-qmB" secondAttribute="trailing" id="I1L-fX-wn5"/>
+                            <constraint firstItem="xcN-8X-jUu" firstAttribute="leading" secondItem="o0F-Tg-qmB" secondAttribute="leading" constant="16" id="Rga-dN-mgT"/>
+                            <constraint firstItem="xcN-8X-jUu" firstAttribute="centerY" secondItem="b2d-8M-tyN" secondAttribute="centerY" id="UaR-OF-jGP"/>
+                            <constraint firstItem="o0F-Tg-qmB" firstAttribute="trailing" secondItem="xcN-8X-jUu" secondAttribute="trailing" constant="16" id="mL4-ss-Cii"/>
+                            <constraint firstItem="xcN-8X-jUu" firstAttribute="top" secondItem="YYO-dk-muZ" secondAttribute="bottom" constant="8" id="ove-s2-sjw"/>
+                            <constraint firstItem="YYO-dk-muZ" firstAttribute="leading" secondItem="o0F-Tg-qmB" secondAttribute="leading" id="uKt-j1-Afp"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="o0F-Tg-qmB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="mty-Sr-iDT"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vhg-RC-Vth" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-30.434782608695656" y="114.50892857142857"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="KxP-Nt-ojj">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="NTt-h3-f58" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vJ5-QB-kpI">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4dl-sD-gXA" kind="relationship" relationship="rootViewController" id="ZXJ-EV-TkK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dem-oH-GqD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-946" y="115"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BV1-FR-VrT" customClass="ViewController" customModule="Snake_It_AR" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U0K-SW-4ec">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
                             </arscnView>
                         </subviews>
-                        <color key="backgroundColor" white="0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
@@ -32,6 +126,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="864" y="485"/>
+        </scene>
+        <!--Help View Controller-->
+        <scene sceneID="6h4-NH-7Rw">
+            <objects>
+                <viewController id="pgt-n2-eHz" customClass="HelpViewController" customModule="Snake_It_AR" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="v2K-Yx-P6B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="nYD-QF-YXz"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Yj-XS-EiF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="864" y="-271"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="snakelogo" width="263" height="117"/>
+    </resources>
 </document>
