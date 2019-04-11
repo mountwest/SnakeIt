@@ -13,6 +13,8 @@
 		5F570DCD225F2962006B641E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F570DCB225F2962006B641E /* Main.storyboard */; };
 		5F570DCF225F2962006B641E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F570DCE225F2962006B641E /* Assets.xcassets */; };
 		5F570DD2225F2962006B641E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F570DD0225F2962006B641E /* LaunchScreen.storyboard */; };
+		5F570DE1225F2F47006B641E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DE0225F2F47006B641E /* MenuViewController.swift */; };
+		5F570DE3225F2F5C006B641E /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DE2225F2F5C006B641E /* HelpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		5F570DCE225F2962006B641E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5F570DD1225F2962006B641E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5F570DD3225F2962006B641E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5F570DE0225F2F47006B641E /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		5F570DE2225F2F5C006B641E /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,73 @@
 		5F570DC4225F2962006B641E /* Snake It AR */ = {
 			isa = PBXGroup;
 			children = (
-				5F570DC5225F2962006B641E /* AppDelegate.swift */,
-				5F570DC7225F2962006B641E /* art.scnassets */,
-				5F570DC9225F2962006B641E /* ViewController.swift */,
-				5F570DCB225F2962006B641E /* Main.storyboard */,
-				5F570DCE225F2962006B641E /* Assets.xcassets */,
-				5F570DD0225F2962006B641E /* LaunchScreen.storyboard */,
-				5F570DD3225F2962006B641E /* Info.plist */,
+				5F570DDF225F2B40006B641E /* Helper Files */,
+				5F570DDE225F2B32006B641E /* Extensions */,
+				5F570DDD225F2B2F006B641E /* Custom Nodes */,
+				5F570DDC225F2B2C006B641E /* UI */,
+				5F570DDB225F2B29006B641E /* Scenes */,
+				5F570DDA225F2B26006B641E /* ViewControllers */,
+				5F570DD9225F2B20006B641E /* Template */,
 			);
 			path = "Snake It AR";
+			sourceTree = "<group>";
+		};
+		5F570DD9225F2B20006B641E /* Template */ = {
+			isa = PBXGroup;
+			children = (
+				5F570DC5225F2962006B641E /* AppDelegate.swift */,
+				5F570DD3225F2962006B641E /* Info.plist */,
+			);
+			name = Template;
+			sourceTree = "<group>";
+		};
+		5F570DDA225F2B26006B641E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				5F570DC9225F2962006B641E /* ViewController.swift */,
+				5F570DE0225F2F47006B641E /* MenuViewController.swift */,
+				5F570DE2225F2F5C006B641E /* HelpViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5F570DDB225F2B29006B641E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		5F570DDC225F2B2C006B641E /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				5F570DC7225F2962006B641E /* art.scnassets */,
+				5F570DD0225F2962006B641E /* LaunchScreen.storyboard */,
+				5F570DCB225F2962006B641E /* Main.storyboard */,
+				5F570DCE225F2962006B641E /* Assets.xcassets */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		5F570DDD225F2B2F006B641E /* Custom Nodes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Custom Nodes";
+			sourceTree = "<group>";
+		};
+		5F570DDE225F2B32006B641E /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		5F570DDF225F2B40006B641E /* Helper Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Helper Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,7 +202,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F570DCA225F2962006B641E /* ViewController.swift in Sources */,
+				5F570DE1225F2F47006B641E /* MenuViewController.swift in Sources */,
 				5F570DC6225F2962006B641E /* AppDelegate.swift in Sources */,
+				5F570DE3225F2F5C006B641E /* HelpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
