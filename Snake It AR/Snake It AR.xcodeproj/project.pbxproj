@@ -15,6 +15,7 @@
 		5F570DD2225F2962006B641E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F570DD0225F2962006B641E /* LaunchScreen.storyboard */; };
 		5F570DE1225F2F47006B641E /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DE0225F2F47006B641E /* MenuViewController.swift */; };
 		5F570DE3225F2F5C006B641E /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DE2225F2F5C006B641E /* HelpViewController.swift */; };
+		5F570DE5225F3B3E006B641E /* Plane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DE4225F3B3E006B641E /* Plane.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		5F570DD3225F2962006B641E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5F570DE0225F2F47006B641E /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		5F570DE2225F2F5C006B641E /* HelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		5F570DE4225F3B3E006B641E /* Plane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		5F570DDD225F2B2F006B641E /* Custom Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				5F570DE4225F3B3E006B641E /* Plane.swift */,
 			);
 			name = "Custom Nodes";
 			sourceTree = "<group>";
@@ -203,6 +206,7 @@
 			files = (
 				5F570DCA225F2962006B641E /* ViewController.swift in Sources */,
 				5F570DE1225F2F47006B641E /* MenuViewController.swift in Sources */,
+				5F570DE5225F3B3E006B641E /* Plane.swift in Sources */,
 				5F570DC6225F2962006B641E /* AppDelegate.swift in Sources */,
 				5F570DE3225F2F5C006B641E /* HelpViewController.swift in Sources */,
 			);
