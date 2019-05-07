@@ -10,13 +10,17 @@ import UIKit
 
 class HelpViewController: UIViewController {
 
+    @IBOutlet weak var backButtonInNavBar: UIBarButtonItem!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-
+    @IBAction func backButtonPressed(_ sender: Any) {
+        _ = navigationController?.popToRootViewController(animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 
