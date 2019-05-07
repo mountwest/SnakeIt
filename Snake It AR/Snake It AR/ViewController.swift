@@ -10,29 +10,38 @@ import UIKit
 import SceneKit
 import ARKit
 
+enum GameState {
+    case noSnakePresent, snakeMoving, gameOver
+}
+
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var backButton: UIButton!
-    
     @IBOutlet var sceneView: ARSCNView!
+    
+    
+    var gameState = GameState.noSnakePresent
+    
+    var snakeArray = [SCNNode]()
+    
+    let MOVEMENTFACTOR: Float = 0.03
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        gameState = GameState.noSnakePresent
         
         // Set the view's delegate
         sceneView.delegate = self
         
         // Show statistics such as fps and timing information
-        sceneView.showsStatistics = true
+        //sceneView.showsStatistics = true
         
         // Show debug options
-        sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        //sceneView.debugOptions = [ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
         
-        // Create a new scene
-        //let scene = SCNScene(named: "art.scnassets/ship.scn")!
-        
-        // Set the scene to the view
-        //sceneView.scene = scene
+        // Auto enable lighting
+        sceneView.autoenablesDefaultLighting = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,6 +49,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Create a session configuration
         let configuration = ARWorldTrackingConfiguration()
+        
+        // Determine the orientaiton of the detection
         configuration.planeDetection = .horizontal
         
         // Run the view's session
@@ -51,6 +62,18 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         // Pause the view's session
         sceneView.session.pause()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        switch gameState {
+        case GameState.noSnakePresent:
+            setupSnake(touches)
+            break
+        case GameState.snakeMoving:
+            break
+        case GameState.gameOver:
+            break
+        }
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -66,41 +89,63 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
-    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-        
-    }
-    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-        
-    }
+//    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
+//
+//    }
+//    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
+//
+//    }
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         let plane = Plane(anchor)
         node.addChildNode(plane)
     }
+    
+    func constructBodyPart(_ position: SCNVector3, _ name: String) {
+        let snakeScene = SCNScene(named: "art.scnassets/\(name).scn")!
+        if let snakeNode = snakeScene.rootNode.childNode(withName: name, recursively: true) {
+        snakeNode.position = position
+        sceneView.scene.rootNode.addChildNode(snakeNode)
+        snakeArray.append(snakeNode)
+        }
+    }
+    
+    func setupSnake(_ touches: Set<UITouch>) {
+        if let touch = touches.first {
+            let touchLocation = touch.location(in: sceneView)
+            let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
+            if let hitResult = results.first {
+                
+                var position = SCNVector3(
+                    x: hitResult.worldTransform.columns.3.x,
+                    y: hitResult.worldTransform.columns.3.y,
+                    z: hitResult.worldTransform.columns.3.z
+                )
+                
+                constructBodyPart(position, "snakeHead")
+                
+                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR
+                
+                constructBodyPart(position, "snakeBody")
+                
+                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 2
+                
+                constructBodyPart(position, "snakeTail")
 
-    // MARK: - ARSCNViewDelegate
-    
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
-    }
-*/
-    
-    func session(_ session: ARSession, didFailWithError error: Error) {
-        // Present an error message to the user
-        
+                startSnakeMovement(position)
+            }
+        }
     }
     
-    func sessionWasInterrupted(_ session: ARSession) {
-        // Inform the user that the session has been interrupted, for example, by presenting an overlay
-        
+    func startSnakeMovement(_ position: SCNVector3) {
+        gameState = GameState.snakeMoving
+        _ = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
     }
     
-    func sessionInterruptionEnded(_ session: ARSession) {
-        // Reset tracking and/or remove existing anchors if consistent tracking is required
-        
+    @objc func fire(){
+        var position = snakeArray[snakeArray.count - 1].position
+        position.z = position.z - MOVEMENTFACTOR
+        constructBodyPart(position, "snakeBody")
     }
+
 }
