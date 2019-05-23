@@ -29,6 +29,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var snakeVectorAxis = VectorAxis.z
     
+    var timer: Timer?
+    
     var GAME_SPEED_IN_SEC: Float = 1
     let MOVEMENTFACTOR: Float = 0.03
     
@@ -173,36 +175,50 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     @IBAction func swipeLeft(_ sender: Any) {
-        let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi), z: 0, duration: 0.1)
-        snakeArray[0].runAction(rotation)
-        switch snakeVectorAxis {
-            case VectorAxis.x:
-                snakeVectorAxis = VectorAxis.z
-                snakeVector = snakeVector * -1
-            break
-            case VectorAxis.z:
-                snakeVectorAxis = VectorAxis.x
-            break
+        if (gameState == GameState.snakeMoving){
+            let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi), z: 0, duration: 0.1)
+            snakeArray[0].runAction(rotation)
+            switch snakeVectorAxis {
+                case VectorAxis.x:
+                    snakeVectorAxis = VectorAxis.z
+                    snakeVector = snakeVector * -1
+                break
+                case VectorAxis.z:
+                    snakeVectorAxis = VectorAxis.x
+                break
+            }
         }
     }
     
     @IBAction func swipeRight(_ sender: Any) {
-        let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi) * -1, z: 0, duration: 0.1)
-        snakeArray[0].runAction(rotation)
-        switch snakeVectorAxis {
-        case VectorAxis.x:
-            snakeVectorAxis = VectorAxis.z
-            break
-        case VectorAxis.z:
-            snakeVectorAxis = VectorAxis.x
-            snakeVector = snakeVector * -1
-            break
+        if (gameState == GameState.snakeMoving){
+            let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi) * -1, z: 0, duration: 0.1)
+            snakeArray[0].runAction(rotation)
+            switch snakeVectorAxis {
+            case VectorAxis.x:
+                snakeVectorAxis = VectorAxis.z
+                break
+            case VectorAxis.z:
+                snakeVectorAxis = VectorAxis.x
+                snakeVector = snakeVector * -1
+                break
+            }
         }
     }
     
     func startSnakeMovement(_ position: SCNVector3) {
         gameState = GameState.snakeMoving
-        _ = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(fire), userInfo: nil, repeats: true)
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(fire), userInfo: nil, repeats: true)
+        }
+    }
+    
+    func stopSnakeMovement() {
+        if timer != nil {
+            timer!.invalidate()
+            timer = nil
+        }
+        gameState = GameState.gameOver
     }
     
     @objc func fire(){
@@ -226,6 +242,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             snakeArray[0].position.x += snakeVector
         }
         
-        
+        for index in 0..<snakeArray.count where index != 0 {
+            if (snakeArray[0].position.x == snakeArray[index].position.x && snakeArray[0].position.z == snakeArray[index].position.z) {
+                stopSnakeMovement()
+            }
+        }
     }
 }
