@@ -14,23 +14,35 @@ enum GameState {
     case noSnakePresent, snakeMoving, gameOver
 }
 
+enum VectorAxis {
+    case x, z
+}
+
 class ViewController: UIViewController, ARSCNViewDelegate {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var sceneView: ARSCNView!
     
-    
     var gameState = GameState.noSnakePresent
     
     var snakeArray = [SCNNode]()
     
+    var snakeVectorAxis = VectorAxis.z
+    
+    var GAME_SPEED_IN_SEC: Float = 1
     let MOVEMENTFACTOR: Float = 0.03
+    
+    var snakeVector: Float = 0
+    
+    var snakeHasMoved: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         gameState = GameState.noSnakePresent
         
+        snakeVector = MOVEMENTFACTOR
+       
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -65,6 +77,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchGameState(touches)
+    }
+    
+    func touchGameState(_ touches: Set<UITouch>) {
         switch gameState {
         case GameState.noSnakePresent:
             setupSnake(touches)
@@ -74,6 +90,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         case GameState.gameOver:
             break
         }
+    }
+    
+    func respondToGestures(){
+        
     }
     
     @IBAction func backButtonPressed(_ sender: Any) {
@@ -130,22 +150,82 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 
                 position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 2
                 
+                constructBodyPart(position, "snakeBody")
+                
+                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 3
+                
+                constructBodyPart(position, "snakeBody")
+                
+                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 4
+                
                 constructBodyPart(position, "snakeTail")
 
                 startSnakeMovement(position)
+                
+                for index in 0..<snakeArray.count {
+                    print("index:\(index)   x:\(snakeArray[index].position.x)  y:\(snakeArray[index].position.y)  z:\(snakeArray[index].position.z)")
+                    
+                }
+                print("---------")
             }
+        }
+    }
+    
+    
+    @IBAction func swipeLeft(_ sender: Any) {
+        let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi), z: 0, duration: 0.1)
+        snakeArray[0].runAction(rotation)
+        switch snakeVectorAxis {
+            case VectorAxis.x:
+                snakeVectorAxis = VectorAxis.z
+                snakeVector = snakeVector * -1
+            break
+            case VectorAxis.z:
+                snakeVectorAxis = VectorAxis.x
+            break
+        }
+    }
+    
+    @IBAction func swipeRight(_ sender: Any) {
+        let rotation = SCNAction.rotateBy(x: 0, y: CGFloat(0.5 * Double.pi) * -1, z: 0, duration: 0.1)
+        snakeArray[0].runAction(rotation)
+        switch snakeVectorAxis {
+        case VectorAxis.x:
+            snakeVectorAxis = VectorAxis.z
+            break
+        case VectorAxis.z:
+            snakeVectorAxis = VectorAxis.x
+            snakeVector = snakeVector * -1
+            break
         }
     }
     
     func startSnakeMovement(_ position: SCNVector3) {
         gameState = GameState.snakeMoving
-        _ = Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(fire), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(fire), userInfo: nil, repeats: true)
     }
     
     @objc func fire(){
-        var position = snakeArray[snakeArray.count - 1].position
-        position.z = position.z - MOVEMENTFACTOR
-        constructBodyPart(position, "snakeBody")
-    }
+        
+        var oldSnakePositionArray = [SCNVector3?](repeating: nil, count: snakeArray.count)
+        var oldSnakeRotationArray = [SCNVector4?](repeating: nil, count: snakeArray.count)
+        
+        for index in 0..<snakeArray.count {
+            oldSnakePositionArray[index] = snakeArray[index].position
+            oldSnakeRotationArray[index] = snakeArray[index].rotation
+        }
 
+        for index in 0..<snakeArray.count where index != 0{
+            snakeArray[index].position = oldSnakePositionArray[index - 1]!
+            snakeArray[index].rotation = oldSnakeRotationArray[index - 1]!
+        }
+        
+        if (snakeVectorAxis == VectorAxis.z){
+            snakeArray[0].position.z += snakeVector
+        } else {
+            snakeArray[0].position.x += snakeVector
+        }
+        
+        
+    }
 }

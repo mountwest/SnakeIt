@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NTt-h3-f58">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="NTt-h3-f58">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -109,6 +109,11 @@
                         <subviews>
                             <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BrB-h1-WRS">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="RYa-yH-grg" appends="YES" id="igd-BI-oHG"/>
+                                    <outletCollection property="gestureRecognizers" destination="BNj-bj-B01" appends="YES" id="UY5-Ty-8IE"/>
+                                </connections>
                             </arscnView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wDi-6J-Ntj">
                                 <rect key="frame" x="15" y="44" width="57" height="30"/>
@@ -149,6 +154,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="RYa-yH-grg" userLabel="Swipe Left">
+                    <connections>
+                        <action selector="swipeLeft:" destination="BV1-FR-VrT" id="syE-Q5-Yc6"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="BNj-bj-B01" userLabel="Swipe Right">
+                    <connections>
+                        <action selector="swipeRight:" destination="BV1-FR-VrT" id="3vT-6k-zMy"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="864" y="485"/>
         </scene>
@@ -161,11 +176,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2L-u7-cOb">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="77"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="851"/>
                                 <color key="backgroundColor" red="0.96457690000534058" green="0.96461945772171021" blue="0.97275429964065552" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tL3-4N-IxZ">
-                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wy8-3f-0uQ"/>
                                 </constraints>
@@ -204,6 +219,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="snakelogo" width="263" height="117"/>
+        <image name="snakelogo" width="132.41958618164062" height="58.909091949462891"/>
     </resources>
 </document>
