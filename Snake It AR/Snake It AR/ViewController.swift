@@ -135,6 +135,22 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         }
     }
     
+    func eatApple(_ position: SCNVector3) {
+        
+        
+        
+        // constructBodyPart(<#T##position: SCNVector3##SCNVector3#>, <#T##name: String##String#>)
+    }
+    
+    func spawnApple() {
+        let position = SCNVector3(1, 0, 1)
+        let appleScene = SCNScene(named: "art.scnassets/apple.scn")!
+        if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
+            appleNode.position = position
+            sceneView.scene.rootNode.addChildNode(appleNode)
+        }
+    }
+    
     func setupSnake(_ touches: Set<UITouch>) {
         if let touch = touches.first {
             let touchLocation = touch.location(in: sceneView)
@@ -168,6 +184,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 constructBodyPart(position, "snakeTail")
 
                 startSnakeMovement(position)
+                
+                spawnApple()
                 
                 for index in 0..<snakeArray.count {
                     print("index:\(index)   x:\(snakeArray[index].position.x)  y:\(snakeArray[index].position.y)  z:\(snakeArray[index].position.z)")
@@ -214,7 +232,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func startSnakeMovement(_ position: SCNVector3) {
         gameState = GameState.snakeMoving
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(fire), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(snakeWalk), userInfo: nil, repeats: true)
         }
     }
     
@@ -226,7 +244,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         gameState = GameState.gameOver
     }
     
-    @objc func fire(){
+    @objc func snakeWalk(){
         
         var oldSnakePositionArray = [SCNVector3?](repeating: nil, count: snakeArray.count)
         var oldSnakeRotationArray = [SCNVector4?](repeating: nil, count: snakeArray.count)
@@ -251,6 +269,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             if (snakeArray[0].position.x == snakeArray[index].position.x && snakeArray[0].position.z == snakeArray[index].position.z) {
                 stopSnakeMovement()
             }
+        }
+        
+        if (snakeArray[0].position.x != nil && snakeArray[0].position.z != nil) {
+            
         }
     }
 }
