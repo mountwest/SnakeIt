@@ -37,6 +37,10 @@ class Plane: SCNNode {
         self.position = SCNVector3(anchor.center.x, -0.002, anchor.center.z) // 2 mm below the origin of plane.
     }
     
+    public func GetGridGeometryProps() -> SCNPlane {
+        return planeGeometry
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

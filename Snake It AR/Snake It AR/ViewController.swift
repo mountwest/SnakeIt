@@ -38,6 +38,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     var snakeHasMoved: Bool = false
     
+    var planeHasBeenSet: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -104,9 +106,11 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        DispatchQueue.main.async {
-            if let planeAnchor = anchor as? ARPlaneAnchor {
-                self.addPlane(node: node, anchor: planeAnchor)
+        if !planeHasBeenSet {
+            DispatchQueue.main.async {
+                if let planeAnchor = anchor as? ARPlaneAnchor {
+                    self.addPlane(node: node, anchor: planeAnchor)
+                }
             }
         }
     }
@@ -114,14 +118,20 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         let plane = Plane(anchor)
         node.addChildNode(plane)
+        print("The plane has been set with width: \(plane.GetGridGeometryProps().debugDescription)")
+        let planeScene = SCNScene(named: "art.scnassets/worldScene.scn")!
+        if let planeNode = planeScene.rootNode.childNode(withName: "worldScene", recursively: true) {
+            planeNode.position = node.position
+            sceneView.scene.rootNode.addChildNode(planeNode)
+        }
     }
     
     func constructBodyPart(_ position: SCNVector3, _ name: String) {
         let snakeScene = SCNScene(named: "art.scnassets/\(name).scn")!
         if let snakeNode = snakeScene.rootNode.childNode(withName: name, recursively: true) {
-        snakeNode.position = position
-        sceneView.scene.rootNode.addChildNode(snakeNode)
-        snakeArray.append(snakeNode)
+            snakeNode.position = position
+            sceneView.scene.rootNode.addChildNode(snakeNode)
+            snakeArray.append(snakeNode)
         }
     }
     
@@ -130,6 +140,8 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             let touchLocation = touch.location(in: sceneView)
             let results = sceneView.hitTest(touchLocation, types: .existingPlaneUsingExtent)
             if let hitResult = results.first {
+                
+                planeHasBeenSet = true
                 
                 var position = SCNVector3(
                     x: hitResult.worldTransform.columns.3.x,
