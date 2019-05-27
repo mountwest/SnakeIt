@@ -32,7 +32,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     var timer: Timer?
     
     var GAME_SPEED_IN_SEC: Float = 1
-    let MOVEMENTFACTOR: Float = 0.03
+    let MOVEMENTFACTOR: Float = 0.015
     
     var snakeVector: Float = 0
     
@@ -110,13 +110,6 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             }
         }
     }
-    
-//    func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
-//
-//    }
-//    func renderer(_ renderer: SCNSceneRenderer, didRemove node: SCNNode, for anchor: ARAnchor) {
-//
-//    }
     
     func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
         let plane = Plane(anchor)
