@@ -117,7 +117,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         // node.addChildNode(plane)
         // print("The plane has been set with width: \(plane.GetGridGeometryProps().debugDescription)")
         if let planeNode = planeScene.rootNode.childNode(withName: "worldScene", recursively: true) {
+//            planeNode.
             planeNode.position = node.position
+            planeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: planeNode.physicsBody?.physicsShape)
+//            planeNode.physicsBody?.categoryBitMask = 1
+//            planeNode.physicsBody?.contactTestBitMask = 10
+//            planeNode.physicsBody?.collisionBitMask = 10
+            planeNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene.rootNode.addChildNode(planeNode)
         }
     }
@@ -125,9 +131,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func constructBodyPart(_ position: SCNVector3, _ name: String) {
         let snakeScene = SCNScene(named: "art.scnassets/\(name).scn")!
         if let snakeNode = snakeScene.rootNode.childNode(withName: name, recursively: true) {
-            snakeNode.physicsBody?.collisionBitMask = 0x2
-            snakeNode.position = position
-            planeScene.rootNode.addChildNode(snakeNode)
+            //snakeNode.physicsBody?.collisionBitMask = 0x2
+             snakeNode.position = position
+            if name == "snakeHead" {
+                snakeNode.physicsBody = SCNPhysicsBody(type: .dynamic, shape: snakeNode.physicsBody?.physicsShape)
+//                snakeNode.physicsBody?.categoryBitMask = 2
+//                snakeNode.physicsBody?.contactTestBitMask = 10
+//                snakeNode.physicsBody?.collisionBitMask = 10
+                snakeNode.physicsBody?.isAffectedByGravity = false
+            }
+            sceneView.scene.rootNode.addChildNode(snakeNode)
             snakeArray.append(snakeNode)
         }
     }
@@ -143,7 +156,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let appleScene = SCNScene(named: "art.scnassets/apple.scn")!
         if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
             appleNode.position = position
-            appleNode.physicsBody?.collisionBitMask = 0x3
+            //appleNode.physicsBody?.collisionBitMask = 0x3
             sceneView.scene.rootNode.addChildNode(appleNode)
         }
     }
@@ -175,12 +188,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 startSnakeMovement(position)
                 
                 spawnApple(position)
-                
-                for index in 0..<snakeArray.count {
-                    print("index:\(index)   x:\(snakeArray[index].position.x)  y:\(snakeArray[index].position.y)  z:\(snakeArray[index].position.z)")
-                    
-                }
-                print("---------")
             }
         }
     }
@@ -274,10 +281,12 @@ extension ViewController: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let mask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
+        print("ashalskhdlkahslkhdlkahsdlkh")
+        
         print(mask)
         
         switch mask {
-        case 0x1 | 0x2:
+        case 1 | 2:
             print("HIT!!!")
             stopSnakeMovement()
         default:
