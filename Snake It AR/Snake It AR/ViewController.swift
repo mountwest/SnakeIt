@@ -9,6 +9,7 @@
 import UIKit
 import SceneKit
 import ARKit
+import GameplayKit
 
 enum GameState {
     case noSnakePresent, snakeMoving, gameOver
@@ -18,37 +19,33 @@ enum VectorAxis {
     case x, z
 }
 
-class ViewController: UIViewController, ARSCNViewDelegate {
+class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDelegate {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var sceneView: ARSCNView!
     
     var gameState = GameState.noSnakePresent
-    
     var snakeArray = [SCNNode]()
-    
     var snakeVectorAxis = VectorAxis.z
-    
     var timer: Timer?
-    
-    var GAME_SPEED_IN_SEC: Float = 1
+    var GAME_SPEED_IN_SEC: Float = 0.2
     let MOVEMENTFACTOR: Float = 0.015
-    
     var snakeVector: Float = 0
-    
     var snakeHasMoved: Bool = false
-    
     var planeHasBeenSet: Bool = false
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         gameState = GameState.noSnakePresent
         
-        snakeVector = MOVEMENTFACTOR
+        snakeVector = 0.001
        
         // Set the view's delegate
         sceneView.delegate = self
+        sceneView.scene.physicsWorld.contactDelegate = self
         
         // Show statistics such as fps and timing information
         //sceneView.showsStatistics = true
@@ -142,8 +139,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         // constructBodyPart(<#T##position: SCNVector3##SCNVector3#>, <#T##name: String##String#>)
     }
     
-    func spawnApple() {
-        let position = SCNVector3(0.01, 0, 0)
+    func spawnApple(_ position: SCNVector3) {
         let appleScene = SCNScene(named: "art.scnassets/apple.scn")!
         if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
             appleNode.position = position
@@ -175,7 +171,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
 
                 startSnakeMovement(position)
                 
-                spawnApple()
+                spawnApple(position)
                 
                 for index in 0..<snakeArray.count {
                     print("index:\(index)   x:\(snakeArray[index].position.x)  y:\(snakeArray[index].position.y)  z:\(snakeArray[index].position.z)")
@@ -267,6 +263,21 @@ class ViewController: UIViewController, ARSCNViewDelegate {
         
         if (snakeArray[0].position.x != nil && snakeArray[0].position.z != nil) {
             
+        }
+    }
+}
+
+extension ViewController: SKPhysicsContactDelegate {
+    func didBegin(_ contact: SKPhysicsContact) {
+        let mask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        
+        print(mask)
+        
+        switch mask {
+        case 1 | 2:
+            print("HIT!!!")
+        default:
+            break
         }
     }
 }
