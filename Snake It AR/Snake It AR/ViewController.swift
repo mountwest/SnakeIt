@@ -143,7 +143,7 @@ class ViewController: UIViewController, ARSCNViewDelegate {
     }
     
     func spawnApple() {
-        let position = SCNVector3(1, 0, 1)
+        let position = SCNVector3(0.01, 0, 0)
         let appleScene = SCNScene(named: "art.scnassets/apple.scn")!
         if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
             appleNode.position = position
@@ -168,19 +168,9 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 constructBodyPart(position, "snakeHead")
                 
                 position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR
-                
                 constructBodyPart(position, "snakeBody")
                 
                 position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 2
-                
-                constructBodyPart(position, "snakeBody")
-                
-                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 3
-                
-                constructBodyPart(position, "snakeBody")
-                
-                position.z = hitResult.worldTransform.columns.3.z - MOVEMENTFACTOR * 4
-                
                 constructBodyPart(position, "snakeTail")
 
                 startSnakeMovement(position)
@@ -227,6 +217,10 @@ class ViewController: UIViewController, ARSCNViewDelegate {
                 break
             }
         }
+    }
+    
+    func CreateSnake() {
+        
     }
     
     func startSnakeMovement(_ position: SCNVector3) {
