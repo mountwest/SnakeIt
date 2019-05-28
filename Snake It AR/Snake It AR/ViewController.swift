@@ -120,8 +120,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         if let planeNode = planeScene.rootNode.childNode(withName: "worldScene", recursively: true) {
             planeNode.position = node.position
             planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: planeNode.physicsBody?.physicsShape)
-            planeNode.physicsBody?.categoryBitMask = 1
-            planeNode.physicsBody?.contactTestBitMask = 2
+            planeNode.physicsBody?.categoryBitMask = CollisionCategory.deathCategory.rawValue
+            planeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
 //            planeNode.physicsBody?.collisionBitMask = 10
             planeNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene.rootNode.addChildNode(planeNode)
@@ -137,9 +137,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
              snakeNode.position = position
             if name == "snakeHead" {
                 snakeNode.physicsBody = SCNPhysicsBody(type: .static, shape: snakeNode.physicsBody?.physicsShape)
-                snakeNode.physicsBody?.categoryBitMask = 2
-                snakeNode.physicsBody?.contactTestBitMask = 1
-//                snakeNode.physicsBody?.collisionBitMask = 10
+                snakeNode.physicsBody?.categoryBitMask = CollisionCategory.snakeHeadCategory.rawValue
+                snakeNode.physicsBody?.collisionBitMask = CollisionCategory.deathCategory.rawValue
                 snakeNode.physicsBody?.isAffectedByGravity = false
             }
             sceneView.scene.rootNode.addChildNode(snakeNode)
@@ -160,8 +159,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
             appleNode.physicsBody = SCNPhysicsBody(type: .static, shape: appleNode.physicsBody?.physicsShape)
             appleNode.position = position
-            appleNode.physicsBody?.categoryBitMask = 1
-            appleNode.physicsBody?.contactTestBitMask = 2
+            appleNode.physicsBody?.categoryBitMask = CollisionCategory.appleCategory.rawValue
+            appleNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
             appleNode.physicsBody?.isAffectedByGravity = false
             sceneView.scene.rootNode.addChildNode(appleNode)
         }
@@ -278,7 +277,36 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
     
-    func didBegin(_ contact: SCNPhysicsContact) {
+    func physicsWorld(_ world: SCNPhysicsWorld, didBegin contact: SCNPhysicsContact) {
+        
+        print("** Collision!! " + contact.nodeA.name! + " hit " + contact.nodeB.name!)
+        
+        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.deathCategory.rawValue
+            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.deathCategory.rawValue {
+            print ("YOU FUCKING DEAD M8")
+            DispatchQueue.main.async {
+                // contact.nodeA.removeFromParentNode()
+                //contact.nodeB.removeFromParentNode()
+                //self.scoreLabel.text = String(self.score)
+            }
+        }
+        
+        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue
+            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue {
+            DispatchQueue.main.async {
+                if contact.nodeA.name == "apple" {
+                    contact.nodeA.removeFromParentNode()
+                } else {
+                    contact.nodeB.removeFromParentNode()
+                }
+                print ("MMM YUMMY")
+                //self.scoreLabel.text = String(self.score)
+            }
+        }
+    }
+    
+    
+    /*func didBegin(_ contact: SCNPhysicsContact) {
         let mask = contact.nodeA.categoryBitMask | contact.nodeB.categoryBitMask
         
         print("ashalskhdlkahslkhdlkahsdlkh")
@@ -292,7 +320,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         default:
             break
         }
-    }
+    } */
 }
 
 /* extension ViewController: SCNPhysicsContactDelegate {
@@ -312,3 +340,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
 }*/
+
+struct CollisionCategory: OptionSet {
+    let rawValue: Int
+    static let snakeHeadCategory = CollisionCategory(rawValue: 1 << 0)
+    static let deathCategory = CollisionCategory(rawValue: 1 << 1)
+    static let appleCategory = CollisionCategory(rawValue: 1 << 2)
+}
