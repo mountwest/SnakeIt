@@ -4,8 +4,8 @@
   <contributor>
    <authoring_tool>SceneKit Collada Exporter v1.0</authoring_tool>
   </contributor>
-  <created>2019-04-11T11:14:24Z</created>
-  <modified>2019-04-11T11:14:24Z</modified>
+  <created>2019-05-27T09:07:46Z</created>
+  <modified>2019-05-27T09:07:46Z</modified>
   <unit meter="1.000000"/>
   <up_axis>Y_UP</up_axis>
  </asset>
@@ -25,6 +25,9 @@
       <diffuse>
        <color>0.618421 0.764455 0.474679 1</color>
       </diffuse>
+      <shininess>
+       <float>100</float>
+      </shininess>
       <reflective>
        <color>0 0 0 1</color>
       </reflective>
@@ -86,7 +89,7 @@
  <library_visual_scenes>
   <visual_scene id="scene6">
    <node id="node7" name="Sphere">
-    <matrix>0.6959104 0 0 0 0 0.6959104 0 0.677327 0 0 0.6959104 0 0 0 0 1 </matrix>
+    <matrix>0.73 0 0 0 0 0.73 0 0.694 0 0 0.73 0 0 0 0 1 </matrix>
     <instance_geometry url="#Sphere">
      <bind_material>
       <technique_common>
