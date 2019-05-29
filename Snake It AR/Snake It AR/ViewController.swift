@@ -37,6 +37,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     var snakeHasBeenCreated: Bool = false
     var planeScene = SCNScene(named: "art.scnassets/worldScene.scn")!
     var planeElevation: Float?
+    var worldNode: SCNNode?
     var Score = 0
     var gridNode: SCNNode?
     
@@ -134,7 +135,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 planeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
                 planeNode.physicsBody?.isAffectedByGravity = false
                 self.sceneView.scene.rootNode.addChildNode(planeNode)
-                self.planeElevation = planeNode.position.y
+                self.worldNode = planeNode
                 print("The plane has been set with height: \(planeNode.position.y)")
             }
             self.planeHasBeenSet = true
@@ -184,8 +185,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         Score = Score + 1
         
         score_label.text = "Score: " + String(Score)
-        
-        // constructBodyPart(<#T##position: SCNVector3##SCNVector3#>, <#T##name: String##String#>)
     }
     
     func setupSnake(_ touches: Set<UITouch>) {
@@ -291,11 +290,15 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let appleScene = SCNScene(named: "art.scnassets/apple.scn")!
         if let appleNode = appleScene.rootNode.childNode(withName: "apple", recursively: true){
             appleNode.physicsBody = SCNPhysicsBody(type: .static, shape: appleNode.physicsBody?.physicsShape)
+            let xPos = worldNode?.worldPosition.x
+            let yPos = worldNode?.worldPosition.y
+            let zPos = worldNode?.worldPosition.z
             appleNode.position = SCNVector3 (
-                x: Float.random(in: -0.2...0.2),
-                y: planeElevation ?? 0.01,
-                z: Float.random(in: -0.2...0.2)
+                x: Float.random(in: (xPos! - 0.2)...(xPos! + 0.2)),
+                y: yPos!,
+                z: Float.random(in: (zPos! - 0.2)...(zPos! + 0.2))
             )
+            print("Apple spawned at (x: \(appleNode.position.x)  z: \(appleNode.position.z))")
             appleNode.physicsBody?.categoryBitMask = CollisionCategory.appleCategory.rawValue
             appleNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
             appleNode.physicsBody?.isAffectedByGravity = false
@@ -314,7 +317,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             stopSnakeMovement()
             DispatchQueue.main.async {
                 
-                //self.scoreLabel.text = String(self.score)
             }
         }
         
@@ -331,7 +333,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 self.eatApple()
                 self.spawnApple()
                 self.constructBodyPart(self.snakeArray[self.snakeArray.count - 1].position, "snakeBody")
-                //self.scoreLabel.text = String(self.score)
             }
         }
     }
