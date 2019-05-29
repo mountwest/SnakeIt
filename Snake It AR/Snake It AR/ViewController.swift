@@ -23,6 +23,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet var sceneView: ARSCNView!
+    @IBOutlet weak var score_label: UILabel!
     
     var gameState = GameState.noSnakePresent
     var snakeArray = [SCNNode]()
@@ -36,10 +37,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     var snakeHasBeenCreated: Bool = false
     var planeScene = SCNScene(named: "art.scnassets/worldScene.scn")!
     var planeElevation: Float?
-    
+    var Score = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        score_label.text = "Score: " + String(Score)
         
         gameState = GameState.noSnakePresent
         
@@ -165,9 +168,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
     
-    func eatApple(_ position: SCNVector3) {
+    func eatApple() {
         
+        Score = Score + 1
         
+        score_label.text = "Score: " + String(Score)
         
         // constructBodyPart(<#T##position: SCNVector3##SCNVector3#>, <#T##name: String##String#>)
     }
@@ -311,6 +316,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 }
                 print ("MMM YUMMY")
                 
+                self.eatApple()
                 self.spawnApple()
                 self.constructBodyPart(self.snakeArray[self.snakeArray.count - 1].position, "snakeBody")
                 //self.scoreLabel.text = String(self.score)
