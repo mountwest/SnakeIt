@@ -38,6 +38,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     var planeScene = SCNScene(named: "art.scnassets/worldScene.scn")!
     var planeElevation: Float?
     var Score = 0
+    var gridNode: SCNNode?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,26 +111,35 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         if !planeHasBeenSet {
+            let grid = Plane(anchor as! ARPlaneAnchor)
+            node.addChildNode(grid)
+            gridNode = grid
+        }
+    }
+    
+    func removeGrid() {
+        if gridNode != nil {
             DispatchQueue.main.async {
-                if let planeAnchor = anchor as? ARPlaneAnchor {
-                    self.addPlane(node: node, anchor: planeAnchor)
-                    self.planeHasBeenSet = true
-                    self.spawnApple()
-                }
+                self.gridNode?.removeFromParentNode()
             }
         }
     }
     
-    func addPlane(node: SCNNode, anchor: ARPlaneAnchor) {
-        if let planeNode = planeScene.rootNode.childNode(withName: "worldScene", recursively: true) {
-            planeNode.position = node.position
-            planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: planeNode.physicsBody?.physicsShape)
-            planeNode.physicsBody?.categoryBitMask = CollisionCategory.deathCategory.rawValue
-            planeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
-            planeNode.physicsBody?.isAffectedByGravity = false
-            sceneView.scene.rootNode.addChildNode(planeNode)
-            planeElevation = planeNode.position.y
-            print("The plane has been set with height: \(planeNode.position.y)")
+    func addPlane(node: SCNNode, position: SCNVector3) {
+        DispatchQueue.main.async {
+            if let planeNode = self.planeScene.rootNode.childNode(withName: "worldScene", recursively: true) {
+                planeNode.position = position
+                planeNode.physicsBody = SCNPhysicsBody(type: .static, shape: planeNode.physicsBody?.physicsShape)
+                planeNode.physicsBody?.categoryBitMask = CollisionCategory.deathCategory.rawValue
+                planeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
+                planeNode.physicsBody?.isAffectedByGravity = false
+                self.sceneView.scene.rootNode.addChildNode(planeNode)
+                self.planeElevation = planeNode.position.y
+                print("The plane has been set with height: \(planeNode.position.y)")
+            }
+            self.planeHasBeenSet = true
+            self.spawnApple()
+            self.removeGrid()
         }
     }
     
@@ -185,9 +196,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 
                 var position = SCNVector3(
                     x: hitResult.worldTransform.columns.3.x,
-                    y: planeElevation ?? hitResult.worldTransform.columns.3.y,
+                    y: self.gridNode?.worldPosition.y ?? hitResult.worldTransform.columns.3.y,
                     z: hitResult.worldTransform.columns.3.z
                 )
+                addPlane(node: self.sceneView.scene.rootNode, position: position)
                 
                 constructBodyPart(position, "snakeHead")
                 
