@@ -268,12 +268,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         } else {
             snakeArray[0].position.x += snakeVector
         }
-        
-        for index in 0..<snakeArray.count where index != 0 {
-            if (snakeArray[0].position.x == snakeArray[index].position.x && snakeArray[0].position.z == snakeArray[index].position.z) {
-                stopSnakeMovement()
-            }
-        }
     }
     
     func spawnApple() {
