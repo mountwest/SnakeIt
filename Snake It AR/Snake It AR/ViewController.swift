@@ -160,6 +160,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             if !snakeHasBeenCreated {
                 snakeArray.append(snakeNode)
             } else {
+                
+                snakeNode.physicsBody = SCNPhysicsBody(type: .static, shape: snakeNode.physicsBody?.physicsShape)
+                snakeNode.physicsBody?.categoryBitMask = CollisionCategory.snakeHeadCategory.rawValue
+                snakeNode.physicsBody?.collisionBitMask = CollisionCategory.deathCategory.rawValue
+                snakeNode.physicsBody?.isAffectedByGravity = false
                 snakeArray[snakeArray.count - 1].removeFromParentNode()
                 snakeArray[snakeArray.count - 1] = snakeNode
                 snakeNode.position.z = snakeArray[snakeArray.count - 1].position.z * snakeVector
@@ -211,6 +216,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 position.z = hitResult.worldTransform.columns.3.z - snakeVector * 11
                 constructBodyPart(position, "snakeTail")
                 snakeHasBeenCreated = true
+                
+//                for i in 0...20 {
+//                    position.z = hitResult.worldTransform.columns.3.z - snakeVector * Float(i)
+//                    constructBodyPart(position, "snakeBody")
+//                }
                 
                 startSnakeMovement(position)
             }
@@ -316,6 +326,18 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 
                 //self.scoreLabel.text = String(self.score)
             }
+      
+// aleks if
+        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.snakeHeadCategory.rawValue
+        || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.snakeHeadCategory.rawValue {
+         
+            print("** Collision!! " + contact.nodeA.name + " hit " + contact.nodeB.name!)
+            
+            print ("YOU DEADED BRA")
+            stopSnakeMovement()
+            DispatchQueue.main.async {
+            
+            }
         }
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue
@@ -334,6 +356,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 //self.scoreLabel.text = String(self.score)
             }
         }
+    }
     }
 }
 
