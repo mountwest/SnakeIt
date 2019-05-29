@@ -30,20 +30,21 @@ class HelpViewController: UIViewController {
         // Color of the text.
         lblTitle.textColor = UIColor.white
         // The font.
-        lblTitle.font = UIFont(name: "Copperplate-bold", size: 22)
+        lblTitle.font = UIFont(name: "Arial-BoldMT", size: 22)
         
         // Add it to the view.
         self.view.addSubview(lblTitle)
         
-        lblSection1.frame = CGRect(x: 0, y: 240, width: self.view.frame.width, height: 120)
-        lblSection1.text = "To play this game, first press on your screen to load in the map and then spawn the snake."
+        lblSection1.frame = CGRect(x: 100, y: 240, width: 200, height: 200)
+        lblSection1.text = "To play this game, first press on your screen to load in the map \nand then spawn the snake."
         lblSection1.textAlignment = .left
         lblSection1.textColor = UIColor.black
-        lblSection1.font = UIFont(name: "Copperplate-bold", size: 16)
+        lblSection1.font = UIFont(name: "Arial", size: 18)
         lblSection1.adjustsFontSizeToFitWidth = true
         lblSection1.minimumScaleFactor = 0.5
         lblSection1.allowsDefaultTighteningForTruncation = true
-        lblSection1.lineBreakMode = true
+        // I have to figure out line breaks.
+        lblSection1.lineBreakMode = NSLineBreakMode.byTruncatingTail
         
         self.view.addSubview(lblSection1)
 
