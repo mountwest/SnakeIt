@@ -7,16 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		16BCAEDA2281B1AE00EB0312 /* snakeTail.scn in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAED72281B1AE00EB0312 /* snakeTail.scn */; };
-		16BCAEDB2281B1AE00EB0312 /* snakeBody.scn in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAED82281B1AE00EB0312 /* snakeBody.scn */; };
-		16BCAEDC2281B1AE00EB0312 /* snakeHead.scn in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAED92281B1AE00EB0312 /* snakeHead.scn */; };
-		16BCAEE42281B1BF00EB0312 /* snekbody.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEDD2281B1BF00EB0312 /* snekbody.dae */; };
-		16BCAEE52281B1BF00EB0312 /* snektail.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEDE2281B1BF00EB0312 /* snektail.dae */; };
-		16BCAEE62281B1BF00EB0312 /* snekhed.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEDF2281B1BF00EB0312 /* snekhed.dae */; };
-		16BCAEE72281B1BF00EB0312 /* apple.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEE02281B1BF00EB0312 /* apple.dae */; };
-		16BCAEE82281B1BF00EB0312 /* snakeBody.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEE12281B1BF00EB0312 /* snakeBody.dae */; };
-		16BCAEE92281B1BF00EB0312 /* snakeTail.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEE22281B1BF00EB0312 /* snakeTail.dae */; };
-		16BCAEEA2281B1BF00EB0312 /* snakeHead.dae in Resources */ = {isa = PBXBuildFile; fileRef = 16BCAEE32281B1BF00EB0312 /* snakeHead.dae */; };
+		5F0874ED229D33E7001AA7B5 /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0874EC229D33E7001AA7B5 /* Configuration.swift */; };
 		5F570DC6225F2962006B641E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DC5225F2962006B641E /* AppDelegate.swift */; };
 		5F570DC8225F2962006B641E /* art.scnassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F570DC7225F2962006B641E /* art.scnassets */; };
 		5F570DCA225F2962006B641E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F570DC9225F2962006B641E /* ViewController.swift */; };
@@ -29,16 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		16BCAED72281B1AE00EB0312 /* snakeTail.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = snakeTail.scn; path = art.scnassets/snakeTail.scn; sourceTree = "<group>"; };
-		16BCAED82281B1AE00EB0312 /* snakeBody.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = snakeBody.scn; path = art.scnassets/snakeBody.scn; sourceTree = "<group>"; };
-		16BCAED92281B1AE00EB0312 /* snakeHead.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = snakeHead.scn; path = art.scnassets/snakeHead.scn; sourceTree = "<group>"; };
-		16BCAEDD2281B1BF00EB0312 /* snekbody.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snekbody.dae; path = art.scnassets/snekbody.dae; sourceTree = "<group>"; };
-		16BCAEDE2281B1BF00EB0312 /* snektail.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snektail.dae; path = art.scnassets/snektail.dae; sourceTree = "<group>"; };
-		16BCAEDF2281B1BF00EB0312 /* snekhed.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snekhed.dae; path = art.scnassets/snekhed.dae; sourceTree = "<group>"; };
-		16BCAEE02281B1BF00EB0312 /* apple.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = apple.dae; path = art.scnassets/apple.dae; sourceTree = "<group>"; };
-		16BCAEE12281B1BF00EB0312 /* snakeBody.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snakeBody.dae; path = art.scnassets/snakeBody.dae; sourceTree = "<group>"; };
-		16BCAEE22281B1BF00EB0312 /* snakeTail.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snakeTail.dae; path = art.scnassets/snakeTail.dae; sourceTree = "<group>"; };
-		16BCAEE32281B1BF00EB0312 /* snakeHead.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = snakeHead.dae; path = art.scnassets/snakeHead.dae; sourceTree = "<group>"; };
+		5F0874EC229D33E7001AA7B5 /* Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		5F570DC2225F2962006B641E /* Snake It AR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Snake It AR.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F570DC5225F2962006B641E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5F570DC7225F2962006B641E /* art.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = art.scnassets; sourceTree = "<group>"; };
@@ -98,6 +80,7 @@
 			children = (
 				5F570DC5225F2962006B641E /* AppDelegate.swift */,
 				5F570DD3225F2962006B641E /* Info.plist */,
+				5F0874EC229D33E7001AA7B5 /* Configuration.swift */,
 			);
 			name = Template;
 			sourceTree = "<group>";
@@ -115,16 +98,6 @@
 		5F570DDB225F2B29006B641E /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				16BCAED82281B1AE00EB0312 /* snakeBody.scn */,
-				16BCAED92281B1AE00EB0312 /* snakeHead.scn */,
-				16BCAED72281B1AE00EB0312 /* snakeTail.scn */,
-				16BCAEE02281B1BF00EB0312 /* apple.dae */,
-				16BCAEE12281B1BF00EB0312 /* snakeBody.dae */,
-				16BCAEE32281B1BF00EB0312 /* snakeHead.dae */,
-				16BCAEE22281B1BF00EB0312 /* snakeTail.dae */,
-				16BCAEDD2281B1BF00EB0312 /* snekbody.dae */,
-				16BCAEDF2281B1BF00EB0312 /* snekhed.dae */,
-				16BCAEDE2281B1BF00EB0312 /* snektail.dae */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -220,20 +193,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				16BCAEE52281B1BF00EB0312 /* snektail.dae in Resources */,
-				16BCAEDA2281B1AE00EB0312 /* snakeTail.scn in Resources */,
 				5F570DC8225F2962006B641E /* art.scnassets in Resources */,
-				16BCAEE62281B1BF00EB0312 /* snekhed.dae in Resources */,
-				16BCAEE92281B1BF00EB0312 /* snakeTail.dae in Resources */,
 				5F570DD2225F2962006B641E /* LaunchScreen.storyboard in Resources */,
-				16BCAEE82281B1BF00EB0312 /* snakeBody.dae in Resources */,
-				16BCAEE42281B1BF00EB0312 /* snekbody.dae in Resources */,
 				5F570DCF225F2962006B641E /* Assets.xcassets in Resources */,
-				16BCAEDC2281B1AE00EB0312 /* snakeHead.scn in Resources */,
-				16BCAEE72281B1BF00EB0312 /* apple.dae in Resources */,
 				5F570DCD225F2962006B641E /* Main.storyboard in Resources */,
-				16BCAEDB2281B1AE00EB0312 /* snakeBody.scn in Resources */,
-				16BCAEEA2281B1BF00EB0312 /* snakeHead.dae in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F0874ED229D33E7001AA7B5 /* Configuration.swift in Sources */,
 				5F570DCA225F2962006B641E /* ViewController.swift in Sources */,
 				5F570DE1225F2F47006B641E /* MenuViewController.swift in Sources */,
 				5F570DE5225F3B3E006B641E /* Plane.swift in Sources */,
