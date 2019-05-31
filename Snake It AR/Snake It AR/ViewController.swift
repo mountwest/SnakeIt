@@ -187,7 +187,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         let snakeScene = SCNScene(named: "art.scnassets/\(name).scn")!
         if let snakeNode = snakeScene.rootNode.childNode(withName: name, recursively: true) {
             snakeNode.position = position
-        
+            if snakeHasBeenCreated {
+                snakeNode.physicsBody?.categoryBitMask = CollisionCategory.deathCategory.rawValue
+                snakeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
+            }
             sceneView.scene.rootNode.addChildNode(snakeNode)
             snakeArray.append(snakeNode)
         }
