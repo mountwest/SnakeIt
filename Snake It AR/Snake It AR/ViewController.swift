@@ -196,7 +196,12 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func eatApple() {
         
         Score = Score + 1
-        gameSpeedInSec = gameSpeedInSec - 0.05
+        gameSpeedInSec = gameSpeedInSec - (gameSpeedInSec/20)
+        if timer != nil {
+            timer!.invalidate()
+            timer = nil
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(gameSpeedInSec), target: self, selector: #selector(snakeWalk), userInfo: nil, repeats: true)
+        }
         score_label.text = "Score: " + String(Score)
     }
     
