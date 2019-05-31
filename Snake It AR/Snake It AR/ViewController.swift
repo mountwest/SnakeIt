@@ -29,7 +29,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     var snakeArray = [SCNNode]()
     var snakeVectorAxis = VectorAxis.z
     var timer: Timer?
-    var GAME_SPEED_IN_SEC: Float = 0.01
+    var gameSpeedInSec: Float = 0.3
     let MOVEMENTFACTOR: Float = 0.015
     var snakeVector: Float = 0
     var snakeHasMoved: Bool = false
@@ -40,6 +40,8 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     var worldNode: SCNNode?
     var Score = 0
     var gridNode: SCNNode?
+    var bodyPartIsBeingCreated: Bool = false
+    var shouldConstructBodyPart: Bool = false
     
     
     override func viewDidLoad() {
@@ -49,7 +51,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         gameState = GameState.noSnakePresent
         
-        snakeVector = 0.001
+        snakeVector = 0.015
        
         // Set the view's delegate
         sceneView.delegate = self
@@ -118,6 +120,13 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         }
     }
     
+    func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
+        if (self.shouldConstructBodyPart) {
+            self.constructBodyPart(snakeArray[snakeArray.count - 1].position, "snakeBody")
+            self.shouldConstructBodyPart = false
+        }
+    }
+    
     func removeGrid() {
         if gridNode != nil {
             DispatchQueue.main.async {
@@ -154,6 +163,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 snakeNode.physicsBody?.categoryBitMask = CollisionCategory.snakeHeadCategory.rawValue
                 snakeNode.physicsBody?.collisionBitMask = CollisionCategory.deathCategory.rawValue
                 snakeNode.physicsBody?.isAffectedByGravity = false
+            } else if snakeHasBeenCreated {
+                snakeNode.physicsBody?.categoryBitMask = CollisionCategory.deathCategory.rawValue
+                snakeNode.physicsBody?.contactTestBitMask = CollisionCategory.snakeHeadCategory.rawValue
             }
             
             sceneView.scene.rootNode.addChildNode(snakeNode)
@@ -167,6 +179,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 addTail(position)
             }
         }
+        self.bodyPartIsBeingCreated = false
     }
     
     func addTail(_ position: SCNVector3) {
@@ -183,7 +196,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func eatApple() {
         
         Score = Score + 1
-        
+        gameSpeedInSec = gameSpeedInSec - 0.05
         score_label.text = "Score: " + String(Score)
     }
     
@@ -202,12 +215,10 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 
                 constructBodyPart(position, "snakeHead")
                 
-                for count in 1...10 {
-                    position.z = hitResult.worldTransform.columns.3.z - snakeVector * Float(count)
-                    constructBodyPart(position, "snakeBody")
-                }
+                position.z = hitResult.worldTransform.columns.3.z - snakeVector
+                constructBodyPart(position, "snakeBody")
                 
-                position.z = hitResult.worldTransform.columns.3.z - snakeVector * 11
+                position.z = hitResult.worldTransform.columns.3.z - snakeVector * 2
                 constructBodyPart(position, "snakeTail")
                 snakeHasBeenCreated = true
                 
@@ -252,7 +263,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
     func startSnakeMovement(_ position: SCNVector3) {
         gameState = GameState.snakeMoving
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: TimeInterval(GAME_SPEED_IN_SEC), target: self, selector: #selector(snakeWalk), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: TimeInterval(gameSpeedInSec), target: self, selector: #selector(snakeWalk), userInfo: nil, repeats: true)
         }
     }
     
@@ -313,15 +324,16 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
         
         if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.deathCategory.rawValue
             || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.deathCategory.rawValue {
-            print ("YOU FUCKING DEAD M8")
+            print ("GAME OVER!")
             stopSnakeMovement()
             DispatchQueue.main.async {
                 
             }
         }
         
-        if contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue
-            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue {
+        if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue
+            || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue) && !bodyPartIsBeingCreated {
+            bodyPartIsBeingCreated = true
             DispatchQueue.main.async {
                 if contact.nodeA.name == "apple" {
                     contact.nodeA.removeFromParentNode()
@@ -332,7 +344,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 
                 self.eatApple()
                 self.spawnApple()
-                self.constructBodyPart(self.snakeArray[self.snakeArray.count - 1].position, "snakeBody")
+                self.shouldConstructBodyPart = true
             }
         }
     }
