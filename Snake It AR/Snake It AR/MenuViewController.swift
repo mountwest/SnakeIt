@@ -10,13 +10,26 @@ import UIKit
 
 class MenuViewController: UIViewController {
 
+    @IBOutlet weak var recentScoreLabel: UILabel!
+    @IBOutlet weak var highScoreLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
-
+    override func viewDidLayoutSubviews() {
+        UpdateScoreLabels()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        UpdateScoreLabels()
+    }
+    
+    func UpdateScoreLabels() {
+        recentScoreLabel.text = String(UserDefaults.standard.integer(forKey: "RecentScore"))
+        highScoreLabel.text = String(UserDefaults.standard.integer(forKey: "Highscore"))
+    }
+    
     /*
     // MARK: - Navigation
 
