@@ -334,6 +334,11 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
             || contact.nodeB.physicsBody?.categoryBitMask == CollisionCategory.deathCategory.rawValue {
             print ("GAME OVER!")
             stopSnakeMovement()
+            UserDefaults.standard.set(Score, forKey: "RecentScore")
+            if Score > UserDefaults.standard.integer(forKey: "Highscore") {
+                UserDefaults.standard.set(Score, forKey: "Highscore")
+            }
+            _ = navigationController?.popToRootViewController(animated: true)
             DispatchQueue.main.async {
                 
             }
