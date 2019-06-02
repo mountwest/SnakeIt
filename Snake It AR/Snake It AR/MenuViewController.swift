@@ -18,6 +18,14 @@ class MenuViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        UpdateScoreLabels()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        UpdateScoreLabels()
+    }
+    
+    func UpdateScoreLabels() {
         recentScoreLabel.text = String(UserDefaults.standard.integer(forKey: "RecentScore"))
         highScoreLabel.text = String(UserDefaults.standard.integer(forKey: "Highscore"))
     }

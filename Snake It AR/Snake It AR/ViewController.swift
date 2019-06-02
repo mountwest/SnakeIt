@@ -339,9 +339,6 @@ class ViewController: UIViewController, ARSCNViewDelegate, SCNPhysicsContactDele
                 UserDefaults.standard.set(Score, forKey: "Highscore")
             }
             _ = navigationController?.popToRootViewController(animated: true)
-            DispatchQueue.main.async {
-                
-            }
         }
         
         if (contact.nodeA.physicsBody?.categoryBitMask == CollisionCategory.appleCategory.rawValue
